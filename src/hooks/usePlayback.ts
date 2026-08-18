@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { usePlaybackStore } from "@/stores/playback";
+import { calculateProgress, calculateActiveLines } from "@/utils/playbackCalc";
 import type { Character } from "@/components/player/CharacterNarrator";
 
 let globalSpeakId = 0;
@@ -121,12 +122,9 @@ export function usePlayback(character: Character = "none") {
 
   const currentStepData = script?.steps[currentStep] ?? null;
   const totalSteps = script?.steps.length ?? 0;
-  const progress = totalSteps > 1 ? (currentStep / (totalSteps - 1)) * 100 : 0;
+  const progress = calculateProgress(currentStep, totalSteps);
   const activeLines = currentStepData
-    ? Array.from(
-        { length: currentStepData.line_end - currentStepData.line_start + 1 },
-        (_, i) => currentStepData.line_start + i
-      )
+    ? calculateActiveLines(currentStepData.line_start, currentStepData.line_end)
     : [];
 
   return { currentStepData, totalSteps, progress, activeLines, isSpeaking };
