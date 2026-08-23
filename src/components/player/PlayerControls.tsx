@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { usePlaybackStore } from "@/stores/playback";
 import { usePlayback } from "@/hooks/usePlayback";
+import { calculateStepFromClickRatio } from "@/utils/playbackCalc";
 
 export function PlayerControls() {
   const {
@@ -25,8 +26,7 @@ export function PlayerControls() {
         <div className="relative flex-1 h-1.5 rounded-full cursor-pointer" style={{ background: "#1C1C24" }}
           onClick={(e) => {
             const rect = e.currentTarget.getBoundingClientRect();
-            const ratio = (e.clientX - rect.left) / rect.width;
-            goToStep(Math.round(ratio * (totalSteps - 1)));
+            goToStep(calculateStepFromClickRatio(e.clientX, rect.left, rect.width, totalSteps));
           }}
         >
           <motion.div
