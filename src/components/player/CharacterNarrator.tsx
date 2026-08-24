@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { truncateNarration } from "@/utils/playbackCalc";
 
 export type Character = "batman" | "spiderman" | "superman" | "none";
 
@@ -189,8 +190,7 @@ export function CharacterNarrator({
                 <p style={{ fontSize: "12px", fontWeight: 500, marginBottom: "4px", color: CHARACTERS[character].color }}>
                   {CHARACTERS[character].name}
                 </p>
-                {currentNarration.slice(0, 120)}
-                {currentNarration.length > 120 ? "..." : ""}
+                {truncateNarration(currentNarration)}
               </motion.div>
             )}
           </AnimatePresence>
