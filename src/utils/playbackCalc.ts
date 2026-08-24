@@ -15,3 +15,8 @@ export function calculateStepFromClickRatio(clickX: number, elementLeft: number,
   const clampedRatio = Math.max(0, Math.min(1, ratio));
   return Math.round(clampedRatio * (totalSteps - 1));
 }
+
+export function truncateNarration(text: string, maxLength: number = 120): string {
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength) + "...";
+}
