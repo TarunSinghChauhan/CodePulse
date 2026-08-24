@@ -7,6 +7,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { usePlayback } from "@/hooks/usePlayback";
 import { usePlaybackStore } from "@/stores/playback";
+import { formatLineRange } from "@/utils/playbackCalc";
 
 const HIGHLIGHT_LABELS: Record<string, { label: string; color: string }> = {
   execute:       { label: "Execute",       color: "#7F77DD" },
@@ -60,9 +61,7 @@ export function NarrationOverlay() {
             {typeInfo.label}
           </span>
           <span className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
-            Line {currentStepData.line_start}
-            {currentStepData.line_end !== currentStepData.line_start &&
-              `–${currentStepData.line_end}`}
+            {formatLineRange(currentStepData.line_start, currentStepData.line_end)}
           </span>
           <span className="text-xs ml-auto" style={{ color: "rgba(255,255,255,0.4)" }}>
             {currentStepData.step_id} / {totalSteps}
