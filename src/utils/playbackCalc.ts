@@ -20,3 +20,8 @@ export function truncateNarration(text: string, maxLength: number = 120): string
   if (text.length <= maxLength) return text;
   return text.slice(0, maxLength) + "...";
 }
+
+export function formatLineRange(lineStart: number, lineEnd: number): string {
+  if (lineEnd === lineStart) return `Line ${lineStart}`;
+  return `Line ${lineStart}–${lineEnd}`;
+}
