@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePlaybackStore } from "@/stores/playback";
 import { calculateProgress, calculateActiveLines } from "@/utils/playbackCalc";
 import type { Character } from "@/components/player/CharacterNarrator";
-import { calculateSpeechTiming } from "@/utils/playbackCalc";
+import { calculateSpeechTiming, selectBestVoice } from "@/utils/playbackCalc";
 
 let globalSpeakId = 0;
 
@@ -52,13 +52,7 @@ export function usePlayback(character: Character = "none") {
         utterance.volume = 1;
 
         const voices = window.speechSynthesis.getVoices();
-        const voice =
-          voices.find((v) => v.name === "Google UK English Male") ||
-          voices.find((v) => v.name === "Google US English") ||
-          voices.find((v) => v.name.includes("Daniel")) ||
-          voices.find((v) => v.name.includes("David")) ||
-          voices.find((v) => v.lang === "en-US" && !v.localService) ||
-          voices.find((v) => v.lang.startsWith("en"));
+        const voice = selectBestVoice(voices);
 
         if (voice) utterance.voice = voice;
 

@@ -31,3 +31,20 @@ export function calculateSpeechTiming(narrationLength: number, rate: number, spe
   const totalWait = (speechMs + 2000) / speed;
   return { speechMs, totalWait };
 }
+
+interface VoiceLike {
+  name: string;
+  lang: string;
+  localService: boolean;
+}
+
+export function selectBestVoice<T extends VoiceLike>(voices: T[]): T | undefined {
+  return (
+    voices.find((v) => v.name === "Google UK English Male") ||
+    voices.find((v) => v.name === "Google US English") ||
+    voices.find((v) => v.name.includes("Daniel")) ||
+    voices.find((v) => v.name.includes("David")) ||
+    voices.find((v) => v.lang === "en-US" && !v.localService) ||
+    voices.find((v) => v.lang.startsWith("en"))
+  );
+}
