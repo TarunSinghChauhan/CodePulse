@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePlaybackStore } from "@/stores/playback";
 import { calculateProgress, calculateActiveLines } from "@/utils/playbackCalc";
 import type { Character } from "@/components/player/CharacterNarrator";
+import { calculateSpeechTiming } from "@/utils/playbackCalc";
 
 let globalSpeakId = 0;
 
@@ -36,8 +37,7 @@ export function usePlayback(character: Character = "none") {
 
     const { rate, pitch } = CHARACTER_SETTINGS[character] || CHARACTER_SETTINGS.none;
     const chars = step.narration.length;
-    const speechMs = (chars / (rate * 11)) * 1000;
-    const totalWait = (speechMs + 2000) / speed;
+    const { speechMs, totalWait } = calculateSpeechTiming(chars, rate, speed);
 
     if (narratingEnabled && typeof window !== "undefined") {
       window.speechSynthesis.cancel();

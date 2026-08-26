@@ -25,3 +25,9 @@ export function formatLineRange(lineStart: number, lineEnd: number): string {
   if (lineEnd === lineStart) return `Line ${lineStart}`;
   return `Line ${lineStart}–${lineEnd}`;
 }
+
+export function calculateSpeechTiming(narrationLength: number, rate: number, speed: number): { speechMs: number; totalWait: number } {
+  const speechMs = (narrationLength / (rate * 11)) * 1000;
+  const totalWait = (speechMs + 2000) / speed;
+  return { speechMs, totalWait };
+}
