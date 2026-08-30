@@ -61,3 +61,18 @@ export function getVariableColors(colorKey: string | undefined) {
   const key = (colorKey ?? "purple") as keyof typeof VARIABLE_COLOR_MAP;
   return VARIABLE_COLOR_MAP[key] ?? VARIABLE_COLOR_MAP["purple"];
 }
+
+const HIGHLIGHT_LABEL_MAP: Record<string, { label: string; color: string }> = {
+  execute:       { label: "Execute",       color: "#7F77DD" },
+  declare:       { label: "Declare",       color: "#1D9E75" },
+  condition:     { label: "Condition",     color: "#EF9F27" },
+  loop:          { label: "Loop",          color: "#378ADD" },
+  return:        { label: "Return",        color: "#1D9E75" },
+  error:         { label: "Error",         color: "#E24B4A" },
+  function_call: { label: "Call",          color: "#7F77DD" },
+  import:        { label: "Import",        color: "#888"    },
+};
+
+export function getHighlightLabel(highlightType: string) {
+  return HIGHLIGHT_LABEL_MAP[highlightType] ?? { label: "Step", color: "#7F77DD" };
+}

@@ -7,18 +7,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { usePlayback } from "@/hooks/usePlayback";
 import { usePlaybackStore } from "@/stores/playback";
-import { formatLineRange } from "@/utils/playbackCalc";
-
-const HIGHLIGHT_LABELS: Record<string, { label: string; color: string }> = {
-  execute:       { label: "Execute",       color: "#7F77DD" },
-  declare:       { label: "Declare",       color: "#1D9E75" },
-  condition:     { label: "Condition",     color: "#EF9F27" },
-  loop:          { label: "Loop",          color: "#378ADD" },
-  return:        { label: "Return",        color: "#1D9E75" },
-  error:         { label: "Error",         color: "#E24B4A" },
-  function_call: { label: "Call",          color: "#7F77DD" },
-  import:        { label: "Import",        color: "#888"    },
-};
+import { formatLineRange, getHighlightLabel } from "@/utils/playbackCalc";
 
 export function NarrationOverlay() {
   const { status, mode } = usePlaybackStore();
@@ -27,8 +16,7 @@ export function NarrationOverlay() {
   const visible = status === "playing" || status === "paused";
   if (!visible || !currentStepData) return null;
 
-  const typeInfo = HIGHLIGHT_LABELS[currentStepData.highlight_type] ??
-    { label: "Step", color: "#7F77DD" };
+  const typeInfo = getHighlightLabel(currentStepData.highlight_type);
 
   const isBreakMode = mode === "break";
 
