@@ -48,3 +48,16 @@ export function selectBestVoice<T extends VoiceLike>(voices: T[]): T | undefined
     voices.find((v) => v.lang.startsWith("en"))
   );
 }
+
+const VARIABLE_COLOR_MAP = {
+  purple: { bg: "#EEEDFE", text: "#3C3489", border: "#AFA9EC", dot: "#7F77DD" },
+  teal:   { bg: "#E1F5EE", text: "#085041", border: "#5DCAA5", dot: "#1D9E75" },
+  amber:  { bg: "#FAEEDA", text: "#633806", border: "#EF9F27", dot: "#D97706" },
+  coral:  { bg: "#FAECE7", text: "#712B13", border: "#F0997B", dot: "#D85A30" },
+  blue:   { bg: "#E6F1FB", text: "#0C447C", border: "#85B7EB", dot: "#378ADD" },
+} as const;
+
+export function getVariableColors(colorKey: string | undefined) {
+  const key = (colorKey ?? "purple") as keyof typeof VARIABLE_COLOR_MAP;
+  return VARIABLE_COLOR_MAP[key] ?? VARIABLE_COLOR_MAP["purple"];
+}

@@ -7,14 +7,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { usePlaybackStore } from "@/stores/playback";
 import { usePlayback } from "@/hooks/usePlayback";
-
-const COLOR_MAP = {
-  purple: { bg: "#EEEDFE", text: "#3C3489", border: "#AFA9EC", dot: "#7F77DD" },
-  teal:   { bg: "#E1F5EE", text: "#085041", border: "#5DCAA5", dot: "#1D9E75" },
-  amber:  { bg: "#FAEEDA", text: "#633806", border: "#EF9F27", dot: "#D97706" },
-  coral:  { bg: "#FAECE7", text: "#712B13", border: "#F0997B", dot: "#D85A30" },
-  blue:   { bg: "#E6F1FB", text: "#0C447C", border: "#85B7EB", dot: "#378ADD" },
-};
+import { getVariableColors } from "@/utils/playbackCalc";
 
 export function VariableTracker() {
   const { script } = usePlaybackStore();
@@ -39,8 +32,7 @@ export function VariableTracker() {
       <AnimatePresence mode="popLayout">
         {variable_states.map((varState) => {
           const def = script.variables.find((v) => v.name === varState.name);
-const colorKey = def?.color ?? "purple";
-const colors = COLOR_MAP[colorKey] ?? COLOR_MAP["purple"];
+          const colors = getVariableColors(def?.color);
 
           return (
             <motion.div
