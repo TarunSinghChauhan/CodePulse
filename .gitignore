@@ -11,3 +11,6 @@
 *.tsbuildinfo
 next-env.d.ts
 .DS_Store
+
+# vitest --coverage output
+/coverage/
